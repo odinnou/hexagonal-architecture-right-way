@@ -6,12 +6,14 @@ namespace Domain.UseCases
 {
     public class PandaFetcher : IPandaFetcher // Notice the presence of this interface.
     {
-        // No IPandaPort implementation in the Domain layer? It's normal.
+        // No IPandaPort or IReverseGeocodingPort implementation in the Domain layer? It's normal.
         private readonly IPandaPort _pandaPort;
+        private readonly IReverseGeocodingPort _reverseGeocodingPort;
 
-        public PandaFetcher(IPandaPort pandaPort)
+        public PandaFetcher(IPandaPort pandaPort, IReverseGeocodingPort reverseGeocodingPort)
         {
             _pandaPort = pandaPort;
+            _reverseGeocodingPort = reverseGeocodingPort;
         }
 
         public async Task<Panda> Execute(Guid pandaId)
@@ -22,6 +24,8 @@ namespace Domain.UseCases
             {
                 throw new PandaNotFoundException(pandaId);
             }
+
+            panda.LastKnownAddress = await _reverseGeocodingPort.GetAddressForCoordinates(panda.Latitude, panda.Longitude);
 
             return panda;
         }
