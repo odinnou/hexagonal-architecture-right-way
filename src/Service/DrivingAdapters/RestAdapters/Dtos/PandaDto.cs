@@ -1,8 +1,8 @@
 ﻿#nullable disable warnings
 
-namespace Domain.Models;
+namespace Service.DrivingAdapters.RestAdapters.Dtos;
 
-public class Panda
+public class PandaDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

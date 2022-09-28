@@ -1,33 +1,33 @@
 ﻿using Domain.Exceptions;
 using Domain.Models;
-using Domain.Ports;
+using Domain.Ports.Driven;
+using Domain.Ports.Driving;
 
-namespace Domain.UseCases
+namespace Domain.UseCases;
+
+public class PandaFetcher : IPandaFetcher // Notice the presence of this interface.
 {
-    public class PandaFetcher : IPandaFetcher // Notice the presence of this interface.
+    // No IPandaPersistencePort or IReverseGeocodingPort implementation in the Domain layer? It's normal.
+    private readonly IPandaPersistencePort _pandaPersistencePort;
+    private readonly IReverseGeocodingPort _reverseGeocodingPort;
+
+    public PandaFetcher(IPandaPersistencePort pandaPersistencePort, IReverseGeocodingPort reverseGeocodingPort)
     {
-        // No IPandaPort or IReverseGeocodingPort implementation in the Domain layer? It's normal.
-        private readonly IPandaPort _pandaPort;
-        private readonly IReverseGeocodingPort _reverseGeocodingPort;
+        _pandaPersistencePort = pandaPersistencePort;
+        _reverseGeocodingPort = reverseGeocodingPort;
+    }
 
-        public PandaFetcher(IPandaPort pandaPort, IReverseGeocodingPort reverseGeocodingPort)
+    public async Task<Panda> Execute(Guid pandaId)
+    {
+        Panda? panda = await _pandaPersistencePort.GetById(pandaId);
+
+        if (panda == null)
         {
-            _pandaPort = pandaPort;
-            _reverseGeocodingPort = reverseGeocodingPort;
+            throw new PandaNotFoundException(pandaId);
         }
 
-        public async Task<Panda> Execute(Guid pandaId)
-        {
-            Panda? panda = await _pandaPort.GetById(pandaId);
+        panda.LastKnownAddress = await _reverseGeocodingPort.GetAddressForCoordinates(panda.Latitude, panda.Longitude);
 
-            if (panda == null)
-            {
-                throw new PandaNotFoundException(pandaId);
-            }
-
-            panda.LastKnownAddress = await _reverseGeocodingPort.GetAddressForCoordinates(panda.Latitude, panda.Longitude);
-
-            return panda;
-        }
+        return panda;
     }
 }
