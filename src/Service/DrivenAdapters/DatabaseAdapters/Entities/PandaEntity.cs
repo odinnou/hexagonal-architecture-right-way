@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable warnings
-namespace Service.DrivenAdapters.DatabaseAdapters.Entities.Mappings;
+namespace Service.DrivenAdapters.DatabaseAdapters.Entities;
 
 [Table("panda")]
 public class PandaEntity

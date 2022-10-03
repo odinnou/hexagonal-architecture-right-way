@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Service.DrivenAdapters.DatabaseAdapters.Entities.Mappings;
+using Service.DrivenAdapters.DatabaseAdapters.Entities;
 
 #nullable disable warnings
 namespace Service.DrivenAdapters.DatabaseAdapters;
