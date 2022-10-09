@@ -26,6 +26,7 @@ public class PandaFetcher : IPandaFetcher // Notice the presence of this interfa
             throw new PandaNotFoundException(pandaId);
         }
 
+        // You could test with latitude = "47.247703075231634" and longitude = "1.3531078346932406"
         panda.LastKnownAddress = await _reverseGeocodingPort.GetAddressForCoordinates(panda.Latitude, panda.Longitude);
 
         return panda;

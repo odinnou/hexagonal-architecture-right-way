@@ -8,7 +8,7 @@ public static class ThirdPartyAdaptersConfiguration
 {
     public static IServiceCollection AddThirdParties(this IServiceCollection services, AppSettings appSettings)
     {
-        services.AddTransient<IReverseGeocodingPort, ReverseGeocodingPortAdapter>();
+        services.AddSingleton<IReverseGeocodingPort>(new ReverseGeocodingPortAdapter(appSettings.ReverseGeocodingBaseUrl));
 
         return services;
     }

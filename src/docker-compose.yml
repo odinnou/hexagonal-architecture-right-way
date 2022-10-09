@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  postgres-data:
+    image: postgres:alpine
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=docker
+    ports:
+      - "5432:5432"
+
+  panda-service:
+    image: panda-service:${TAG:-latest}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "33030:80"
+    build:
+      context: .
+      dockerfile: Service/Dockerfile
+    depends_on:
+      - postgres-data
