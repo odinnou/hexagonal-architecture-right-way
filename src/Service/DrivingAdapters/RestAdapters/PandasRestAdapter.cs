@@ -23,12 +23,14 @@ public class PandasRestAdapter : ControllerBase
     }
 
     /// <summary>
-    /// Get panda for id
+    /// Get panda name and last location for id
     /// </summary>
     /// <param name="pandaId" example="54322345-5432-2345-5432-543223455432">Panda Id to fetch</param>
     /// <response code="200">OK, Panda fetched</response>
+    /// <response code="404">Panda not found</response>
     [HttpGet("{pandaId:guid:required}")]
     [ProducesResponseType(typeof(PandaDto), Status200OK)]
+    [ProducesResponseType(typeof(void), Status404NotFound)]
     public async Task<PandaDto> Get(Guid pandaId)
     {
         Panda panda = await _pandaFetcher.Execute(pandaId);
