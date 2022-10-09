@@ -1,6 +1,5 @@
 using Domain.Ports.Driven;
 using Service.DrivenAdapters.ThirdPartyAdapters;
-using Service.DrivingAdapters.Configuration;
 
 namespace Service.DrivenAdapters.DatabaseAdapters.Configuration;
 

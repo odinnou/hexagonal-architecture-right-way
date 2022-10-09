@@ -1,6 +1,6 @@
 #nullable disable warnings
 
-namespace Service.DrivingAdapters.Configuration;
+namespace Service;
 
 public class AppSettings
 {

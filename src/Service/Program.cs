@@ -1,3 +1,4 @@
+using Service;
 using Service.DrivenAdapters.DatabaseAdapters.Configuration;
 using Service.DrivingAdapters.Configuration;
 using System.Reflection;
