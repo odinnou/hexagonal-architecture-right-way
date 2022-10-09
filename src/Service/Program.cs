@@ -13,7 +13,10 @@ configuration.GetSection(nameof(AppSettings)).Bind(appSettings);
 
 // 2. Add services step
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+});
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddUseCases();
 builder.Services.AddThirdParties(appSettings);
