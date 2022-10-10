@@ -4,11 +4,11 @@ using Service.DrivenAdapters.ThirdPartyAdapters.Dtos;
 
 namespace Service.DrivenAdapters.ThirdPartyAdapters;
 
-public class ReverseGeocodingPortAdapter : IReverseGeocodingPort, IDisposable
+public class ReverseGeocodingAdapter : IReverseGeocodingPort, IDisposable
 {
     private readonly RestClient _client;
 
-    public ReverseGeocodingPortAdapter(string reverseGeocodingBaseUrl)
+    public ReverseGeocodingAdapter(string reverseGeocodingBaseUrl)
     {
         _client = new RestClient(new RestClientOptions(reverseGeocodingBaseUrl));
     }
