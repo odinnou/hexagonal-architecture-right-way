@@ -18,7 +18,7 @@ public class ReverseGeocodingAdapter : IReverseGeocodingPort, IDisposable
         // GET /reverse-geocoding?latitude={latitude}&longitude={longitude}, using RestSharp
         AddressDto? addressDto = await _client.GetJsonAsync<AddressDto>("reverse-geocoding", new { latitude, longitude });
 
-        return addressDto!.Address;
+        return addressDto?.Address;
     }
 
     public void Dispose()
