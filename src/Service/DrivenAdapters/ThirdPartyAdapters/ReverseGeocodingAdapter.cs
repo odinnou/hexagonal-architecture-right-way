@@ -1,6 +1,7 @@
 ﻿using Domain.Ports.Driven;
 using RestSharp;
 using Service.DrivenAdapters.ThirdPartyAdapters.Dtos;
+using System.Globalization;
 
 namespace Service.DrivenAdapters.ThirdPartyAdapters;
 
@@ -15,10 +16,22 @@ public class ReverseGeocodingAdapter : IReverseGeocodingPort, IDisposable
 
     public async Task<string?> GetAddressForCoordinates(decimal latitude, decimal longitude)
     {
-        // GET /reverse-geocoding?latitude={latitude}&longitude={longitude}, using RestSharp
-        AddressDto? addressDto = await _client.GetJsonAsync<AddressDto>("reverse-geocoding", new { latitude, longitude });
+        NumberFormatInfo forceDotAsDecimalSeparator = new() { NumberDecimalSeparator = "." };
 
-        return addressDto?.Address;
+        RestRequest request = new RestRequest("reverse-geocoding")
+         .AddParameter("latitude", latitude.ToString(forceDotAsDecimalSeparator))
+         .AddParameter("longitude", longitude.ToString(forceDotAsDecimalSeparator))
+         ;
+
+        // GET /reverse-geocoding?latitude={latitude}&longitude={longitude}, using RestSharp
+        RestResponse<AddressDto> response = await _client.ExecuteGetAsync<AddressDto>(request);
+
+        if (!response.IsSuccessStatusCode || response.ErrorException is not null)
+        {
+            return null;
+        }
+
+        return response.Data!.Address;
     }
 
     public void Dispose()
