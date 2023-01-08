@@ -11,7 +11,7 @@ public class ReverseGeocodingAdapter : IReverseGeocodingPort, IDisposable
 
     public ReverseGeocodingAdapter(string reverseGeocodingBaseUrl)
     {
-        _client = new RestClient(new RestClientOptions(reverseGeocodingBaseUrl));
+        _client = new RestClient(new RestClientOptions(reverseGeocodingBaseUrl) { ThrowOnAnyError = true });
     }
 
     public async Task<string?> GetAddressForCoordinates(decimal latitude, decimal longitude)
