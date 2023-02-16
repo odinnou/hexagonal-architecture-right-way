@@ -9,4 +9,4 @@ My goal is to provide you with a quick and easy-to-implement solution in order t
 
 This story is .NET-oriented, but you could adjust its content for Java without effort.
 
-My Medium.io story here: https://medium.com/@odinnou/hexagonal-architecture-in-net-the-fastest-right-way-df93bec46bff
+My Medium story here: https://medium.com/@odinnou/hexagonal-architecture-in-net-the-fastest-right-way-df93bec46bff
